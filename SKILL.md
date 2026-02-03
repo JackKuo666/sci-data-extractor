@@ -67,6 +67,7 @@ You are a professional scientific literature data extraction assistant, helping 
    EXTRACTOR_API_KEY=your-api-key-here
    EXTRACTOR_BASE_URL=https://api.anthropic.com
    EXTRACTOR_MODEL=claude-sonnet-4-5-20250929
+   EXTRACTOR_MAX_TOKENS=16384
    ```
 
 3. **Optional: Configure Mathpix OCR** (for high-precision OCR):
@@ -117,6 +118,8 @@ Users should set environment variables (optional, can also be in .env file):
 - `EXTRACTOR_API_KEY`: LLM API key
 - `EXTRACTOR_BASE_URL`: API endpoint
 - `EXTRACTOR_MODEL`: Model name (default: claude-sonnet-4-5-20250929)
+- `EXTRACTOR_TEMPERATURE`: Temperature parameter (default: 0.1)
+- `EXTRACTOR_MAX_TOKENS`: Maximum output tokens (default: 16384)
 - `MATHPIX_APP_ID`: Mathpix OCR App ID (optional)
 - `MATHPIX_APP_KEY`: Mathpix OCR Key (optional)
 

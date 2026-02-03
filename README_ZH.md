@@ -112,6 +112,7 @@ export MATHPIX_APP_KEY="your-mathpix-app-key"
 # 可选：默认参数
 export EXTRACTOR_MODEL="claude-sonnet-4-5-20250929"
 export EXTRACTOR_TEMPERATURE="0.1"
+export EXTRACTOR_MAX_TOKENS="16384"
 ```
 
 ### 获取 API 密钥
@@ -353,7 +354,7 @@ sci-data-extractor/
 
 ### Q: 如何处理超过 token 限制的长文档？
 
-**A:** 工具会自动分段处理，将长文档分成多个部分，最后合并结果。
+**A:** 工具会自动分段处理，将长文档分成多个部分，最后合并结果。对于大型表格或大量数据提取，可以通过增加 `EXTRACTOR_MAX_TOKENS` 环境变量来提高输出上限（默认值：16384，可设置为 32768 或更高）。
 
 ### Q: 提取的数据准确吗？
 

@@ -48,6 +48,7 @@ class Config:
         self.mathpix_app_key = os.getenv('MATHPIX_APP_KEY')
         self.default_model = os.getenv('EXTRACTOR_MODEL', 'claude-sonnet-4-5-20250929')
         self.default_temperature = float(os.getenv('EXTRACTOR_TEMPERATURE', '0.1'))
+        self.default_max_tokens = int(os.getenv('EXTRACTOR_MAX_TOKENS', '16384'))
 
     def validate(self) -> bool:
         """验证配置"""
@@ -206,7 +207,7 @@ class DataExtractor:
         self.config = config
         self.client = OpenAI(api_key=config.api_key, base_url=config.base_url)
 
-    def call_llm(self, messages: List[Dict], model: str = None, temperature: float = None) -> Optional[str]:
+    def call_llm(self, messages: List[Dict], model: str = None, temperature: float = None, max_tokens: int = None) -> Optional[str]:
         """
         调用 LLM API
 
@@ -214,12 +215,14 @@ class DataExtractor:
             messages: 消息列表
             model: 模型名称
             temperature: 温度参数
+            max_tokens: 最大输出 token 数
 
         Returns:
             LLM 响应文本
         """
         model = model or self.config.default_model
         temperature = temperature or self.config.default_temperature
+        max_tokens = max_tokens or self.config.default_max_tokens
 
         try:
             print(f"API 调用信息:")
@@ -227,12 +230,13 @@ class DataExtractor:
             print(f"  - Base URL: {self.config.base_url}")
             print(f"  - Messages: {len(messages)} 条")
             print(f"  - Temperature: {temperature}")
+            print(f"  - Max Tokens: {max_tokens}")
 
             completion = self.client.chat.completions.create(
                 model=model,
                 messages=messages,
                 temperature=temperature,
-                max_tokens=8192,
+                max_tokens=max_tokens,
                 stream=False
             )
 

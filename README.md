@@ -113,6 +113,7 @@ export MATHPIX_APP_KEY="your-mathpix-app-key"
 # Optional: Default parameters
 export EXTRACTOR_MODEL="claude-sonnet-4-5-20250929"
 export EXTRACTOR_TEMPERATURE="0.1"
+export EXTRACTOR_MAX_TOKENS="16384"
 ```
 
 ### Get API Keys
@@ -355,7 +356,7 @@ sci-data-extractor/
 
 ### Q: How to handle documents exceeding token limits?
 
-**A:** The tool automatically segments long documents into multiple parts and merges the results.
+**A:** The tool automatically segments long documents into multiple parts and merges the results. For large tables or extensive data extraction, you can increase the `EXTRACTOR_MAX_TOKENS` environment variable (default: 16384, max: 32768 or higher).
 
 ### Q: Is the extracted data accurate?
 
