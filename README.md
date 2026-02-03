@@ -1,244 +1,245 @@
 # Sci-Data-Extractor
 
-> **科学文献数据提取工具** - 从科学论文 PDF 中智能提取结构化数据
+> **AI-Powered Scientific Literature Data Extraction Tool** - Intelligently extract structured data from scientific paper PDFs
 
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 
-## 项目简介
+## Overview
 
-**Sci-Data-Extractor** 是一个 Claude Code Skill，旨在帮助科研工作者从科学文献 PDF 中自动提取结构化数据。无论是表格、图表还是文本中的数据，都可以通过 AI 智能识别并转换为可用的格式（CSV、Markdown 表格等）。
+**Sci-Data-Extractor** is a Claude Code Skill designed to help researchers automatically extract structured data from scientific literature PDFs. Whether data is in tables, charts, or text, it can be intelligently recognized by AI and converted into usable formats (CSV, Markdown tables, etc.).
 
-### 核心特性
+### Key Features
 
-- **🔍 多种 OCR 方式**：支持 Mathpix OCR（高精度）和 PyMuPDF（免费）
-- **🤖 AI 智能提取**：使用 Claude Sonnet 4.5 / GPT-4o 提取数据
-- **📊 灵活输出**：支持 Markdown 表格和 CSV 格式
-- **🎯 预设模板**：内置酶动力学、实验结果、文献综述等模板
-- **🔄 批量处理**：支持批量提取多个文献文件
-- **⚙️ 高度可配置**：支持自定义提取字段和规则
+- **🔍 Multiple OCR Methods**: Support for Mathpix OCR (high-precision) and PyMuPDF (free)
+- **🤖 AI-Powered Extraction**: Use Claude Sonnet 4.5 / GPT-4o for data extraction
+- **📊 Flexible Output**: Support for Markdown tables and CSV formats
+- **🎯 Preset Templates**: Built-in templates for enzyme kinetics, experimental results, literature reviews, etc.
+- **🔄 Batch Processing**: Support for batch extraction from multiple literature files
+- **⚙️ Highly Configurable**: Support for custom extraction fields and rules
 
-## 安装
+## Installation
 
-### 方法一：通过 npx 一键安装（推荐）
+### Method 1: One-Click Installation via npx (Recommended)
 
 ```bash
 npx skills add https://github.com/JackKuo666/sci-data-extractor.git
 ```
 
-### 方法二：通过 Git 克隆
+### Method 2: Git Clone
 
 ```bash
-# 克隆到 Claude Code 的 skills 目录
+# Clone to Claude Code skills directory
 git clone https://github.com/JackKuo666/sci-data-extractor.git ~/.claude/skills/sci-data-extractor
 ```
 
-### 方法三：手动安装
+### Method 3: Manual Installation
 
-1. 下载本项目的 ZIP 文件或克隆到本地
-2. 将 `sci-data-extractor` 文件夹复制到 Claude Code 的 skills 目录：
+1. Download the project ZIP or clone to local
+2. Copy the `sci-data-extractor` folder to Claude Code skills directory:
    - **macOS/Linux**: `~/.claude/skills/`
    - **Windows**: `%USERPROFILE%\.claude\skills\`
-3. 确保文件夹结构如下：
+3. Ensure the folder structure is:
 
 ```
 ~/.claude/skills/sci-data-extractor/
-├── SKILL.md       # 技能定义文件
-├── extractor.py   # 核心提取脚本
-├── README.md      # 说明文档
-└── requirements.txt # 依赖列表
+├── SKILL.md       # Skill definition file
+├── extractor.py   # Core extraction script
+├── README.md      # Documentation (English)
+├── README_ZH.md   # Documentation (Chinese)
+└── requirements.txt # Dependencies
 ```
 
-### 安装 Python 依赖
+### Install Python Dependencies
 
 ```bash
 cd ~/.claude/skills/sci-data-extractor
 pip install -r requirements.txt
 ```
 
-### 验证安装
+### Verify Installation
 
-重启 Claude Code 或重新加载 skills 后，在对话中输入：
+Restart Claude Code or reload skills, then enter in conversation:
 
 ```
 /extract-data
 ```
 
-如果安装成功，该技能将被激活。
+If installed successfully, the skill will be activated.
 
-## 配置
+## Configuration
 
-### 环境变量
+### Environment Variables
 
-创建 `.env` 文件或设置以下环境变量：
+Create a `.env` file or set the following environment variables:
 
 ```bash
-# 必需：LLM API 配置
+# Required: LLM API configuration
 export EXTRACTOR_API_KEY="your-api-key-here"
-export EXTRACTOR_BASE_URL="https://api.anthropic.com"  # 或其他兼容端点
+export EXTRACTOR_BASE_URL="https://api.anthropic.com"  # or other compatible endpoint
 
-# 可选：Mathpix OCR 配置（用于高质量 OCR）
+# Optional: Mathpix OCR configuration (for high-quality OCR)
 export MATHPIX_APP_ID="your-mathpix-app-id"
 export MATHPIX_APP_KEY="your-mathpix-app-key"
 
-# 可选：默认参数
+# Optional: Default parameters
 export EXTRACTOR_MODEL="claude-sonnet-4-5-20250929"
 export EXTRACTOR_TEMPERATURE="0.1"
 ```
 
-### 获取 API 密钥
+### Get API Keys
 
 - **Anthropic Claude**: https://console.anthropic.com/
 - **OpenAI**: https://platform.openai.com/api-keys
 - **Mathpix OCR**: https://api.mathpix.com/
 
-## 使用方法
+## Usage
 
-### 在 Claude Code 中使用
+### Using in Claude Code
 
-#### 1. 快速提取（使用预设模板）
-
-```
-/extract-data 从 paper.pdf 中提取酶动力学数据
-```
-
-#### 2. 自定义提取
+#### 1. Quick Extraction (Using Preset Templates)
 
 ```
-/extract-data 从 article.pdf 中提取所有表格的临床试验数据
+/extract-data Extract enzyme kinetics data from paper.pdf
 ```
 
-#### 3. 批量处理
+#### 2. Custom Extraction
 
 ```
-/batch-extract 处理 ./literature 文件夹中的所有 PDF
+/extract-data Extract all clinical trial data from tables in article.pdf
 ```
 
-#### 4. 图表数据提取
+#### 3. Batch Processing
 
 ```
-/extract-data 从 figure3.png 中提取曲线数据点
+/batch-extract Process all PDFs in ./literature folder
 ```
 
-### 命令行直接使用
+#### 4. Chart Data Extraction
 
-#### 基础用法
+```
+/extract-data Extract curve data points from figure3.png
+```
+
+### Direct Command Line Usage
+
+#### Basic Usage
 
 ```bash
-# 使用 PyMuPDF（免费）提取
+# Extract using PyMuPDF (free)
 python extractor.py input.pdf -o output.md
 
-# 使用 Mathpix OCR（高精度）
+# Extract using Mathpix OCR (high-precision)
 python extractor.py input.pdf -o output.md --ocr mathpix
 ```
 
-#### 使用预设模板
+#### Using Preset Templates
 
 ```bash
-# 酶动力学数据
+# Enzyme kinetics data
 python extractor.py paper.pdf --template enzyme -o results.md
 
-# 实验结果数据
+# Experimental results data
 python extractor.py paper.pdf --template experiment -o results.md
 
-# 文献综述数据
+# Literature review data
 python extractor.py paper.pdf --template review -o results.md
 ```
 
-#### 自定义提取提示
+#### Custom Extraction Prompt
 
 ```bash
 python extractor.py paper.pdf \
-  -p "提取所有与蛋白质结构相关的数据，包括分辨率、R值、R_free值等" \
+  -p "Extract all protein structure-related data, including resolution, R-value, R_free value, etc." \
   -o results.md
 ```
 
-#### 输出 CSV 格式
+#### Output CSV Format
 
 ```bash
 python extractor.py paper.pdf --template enzyme -o results.csv --format csv
 ```
 
-#### 打印结果到终端
+#### Print Results to Terminal
 
 ```bash
 python extractor.py paper.pdf --template enzyme -o results.md --print
 ```
 
-## 预设模板说明
+## Preset Templates
 
-### 模板 1: 酶动力学数据 (`enzyme`)
+### Template 1: Enzyme Kinetics Data (`enzyme`)
 
-提取字段：
-- Enzyme（酶名称）
-- Organism（来源生物）
-- Substrate（底物）
-- Km / Unit_Km（米氏常数）
-- Kcat / Unit_Kcat（催化常数）
-- Kcat_Km / Unit_Kcat_Km（催化效率）
-- Temperature（温度）
-- pH（酸碱度）
-- Mutant（突变体）
-- Cosubstrate（辅底物）
+Extracted fields:
+- Enzyme (enzyme name)
+- Organism (source organism)
+- Substrate (substrate name)
+- Km / Unit_Km (Michaelis constant)
+- Kcat / Unit_Kcat (catalytic constant)
+- Kcat_Km / Unit_Kcat_Km (catalytic efficiency)
+- Temperature (temperature)
+- pH (acidity/alkalinity)
+- Mutant (mutant information)
+- Cosubstrate (co-substrate)
 
-### 模板 2: 实验结果数据 (`experiment`)
+### Template 2: Experimental Results Data (`experiment`)
 
-提取字段：
-- Experiment（实验名称）
-- Condition（实验条件）
-- Result（结果值）
-- Unit（单位）
-- Standard_Deviation（标准差）
-- Sample_Size（样本量）
-- p_value（显著性）
+Extracted fields:
+- Experiment (experiment name)
+- Condition (experimental conditions)
+- Result (result value)
+- Unit (unit of measurement)
+- Standard_Deviation (standard deviation)
+- Sample_Size (sample size n)
+- p_value (statistical significance)
 
-### 模板 3: 文献综述数据 (`review`)
+### Template 3: Literature Review Data (`review`)
 
-提取字段：
-- Author（作者）
-- Year（年份）
-- Journal（期刊）
-- Title（标题）
-- DOI（数字对象标识符）
-- Key_Findings（主要发现）
-- Methodology（研究方法）
+Extracted fields:
+- Author (author names)
+- Year (publication year)
+- Journal (journal name)
+- Title (article title)
+- DOI (digital object identifier)
+- Key_Findings (main findings)
+- Methodology (research methods)
 
-## 使用场景
+## Use Cases
 
-### 场景 1: 构建酶动力学数据库
+### Case 1: Build Enzyme Kinetics Database
 
 ```bash
-# 批量提取多篇文献的酶动力学数据
+# Batch extract enzyme kinetics data from multiple papers
 for file in literature/*.pdf; do
     python extractor.py "$file" --template enzyme -o "results/$(basename "$file" .pdf).csv" --format csv
 done
 ```
 
-### 场景 2: 提取临床实验数据
+### Case 2: Extract Clinical Trial Data
 
 ```bash
 python extractor.py clinical_trial.pdf \
-  -p "提取所有临床试验的患者数量、治疗方案、有效率和副作用数据" \
+  -p "Extract all clinical trial data including patient count, treatment protocol, response rate, and side effects" \
   -o clinical_data.csv --format csv
 ```
 
-### 场景 3: 整理文献综述
+### Case 3: Organize Literature Review
 
 ```bash
 python extractor.py review_paper.pdf --template review -o references.md
 ```
 
-### 场景 4: 提取材料性质数据
+### Case 4: Extract Material Properties Data
 
 ```bash
 python extractor.py materials.pdf \
-  -p "提取所有材料的机械性能数据，包括强度、模量、断裂伸长率等" \
+  -p "Extract all mechanical property data of materials, including strength, modulus, elongation at break, etc." \
   -o materials.csv --format csv
 ```
 
-## 输出格式
+## Output Formats
 
-### Markdown 表格
+### Markdown Table
 
 ```markdown
 | Enzyme | Organism | Substrate | Km | Unit_Km | Kcat | Unit_Kcat |
@@ -246,121 +247,122 @@ python extractor.py materials.pdf \
 | HEX1 | Saccharomyces cerevisiae | Glucose | 0.12 | mM | 1840 | s^-1 |
 ```
 
-### CSV 格式
+### CSV Format
 
 ```csv
 Enzyme,Organism,Substrate,Km,Unit_Km,Kcat,Unit_Kcat
 HEX1,Saccharomyces cerevisiae,Glucose,0.12,mM,1840,s^-1
 ```
 
-## 项目结构
+## Project Structure
 
 ```
 sci-data-extractor/
-├── SKILL.md              # Claude Code 技能定义
-├── extractor.py          # 核心提取脚本
-├── README.md             # 项目说明文档
-├── requirements.txt      # Python 依赖
-├── .env.example          # 环境变量示例
-└── examples/             # 使用示例
-    ├── enzyme_paper.pdf  # 示例 PDF
-    └── custom_prompt.txt # 自定义提示示例
+├── SKILL.md              # Claude Code skill definition
+├── extractor.py          # Core extraction script
+├── batch_extract.py      # Batch processing script
+├── README.md             # Documentation (English)
+├── README_ZH.md          # Documentation (Chinese)
+├── requirements.txt      # Python dependencies
+├── .env.example          # Environment variable examples
+└── examples/             # Usage examples
+    └── custom_prompts.txt # Custom prompt examples
 ```
 
-## 技术架构
+## Technical Architecture
 
 ```
 ┌─────────────────┐
-│   PDF 输入文件   │
+│   PDF Input     │
 └────────┬────────┘
          │
          ▼
 ┌─────────────────────────┐
-│   OCR 处理层            │
-│  • Mathpix OCR (可选)   │
-│  • PyMuPDF (默认)       │
+│   OCR Processing Layer  │
+│  • Mathpix OCR (opt.)   │
+│  • PyMuPDF (default)    │
 └────────┬────────────────┘
          │
          ▼
 ┌─────────────────────────┐
-│   文本预处理            │
-│  • 删除参考文献         │
-│  • 清理格式             │
+│   Text Preprocessing    │
+│  • Remove references    │
+│  • Clean formatting     │
 └────────┬────────────────┘
          │
          ▼
 ┌─────────────────────────┐
-│   AI 提取层             │
+│   AI Extraction Layer   │
 │  • Claude Sonnet 4.5    │
 │  • GPT-4o               │
 └────────┬────────────────┘
          │
          ▼
 ┌─────────────────────────┐
-│   输出格式化            │
-│  • Markdown 表格        │
+│   Output Formatting     │
+│  • Markdown tables      │
 │  • CSV                  │
 └────────┬────────────────┘
          │
          ▼
 ┌─────────────────┐
-│   结构化数据输出 │
+│ Structured Data │
 └─────────────────┘
 ```
 
-## 依赖项
+## Dependencies
 
 - **Python 3.11+**
-- **PyMuPDF**: PDF 文本提取
-- **OpenAI**: LLM API 调用（兼容 Claude）
-- **Requests** (可选): Mathpix OCR 调用
+- **PyMuPDF**: PDF text extraction
+- **OpenAI**: LLM API calls (compatible with Claude)
+- **Requests** (optional): Mathpix OCR calls
 
-## 常见问题
+## FAQ
 
-### Q: Mathpix OCR 和 PyMuPDF 有什么区别？
+### Q: What's the difference between Mathpix OCR and PyMuPDF?
 
 **A:**
-- **Mathpix OCR**: 高精度，能识别公式和复杂表格，但需要 API 付费
-- **PyMuPDF**: 完全免费，适合纯文本内容，公式识别效果较差
+- **Mathpix OCR**: High precision, can recognize formulas and complex tables, but requires paid API
+- **PyMuPDF**: Completely free, suitable for plain text content, less effective at formula recognition
 
-### Q: 如何处理超过 token 限制的长文档？
+### Q: How to handle documents exceeding token limits?
 
-**A:** 工具会自动分段处理，将长文档分成多个部分，最后合并结果。
+**A:** The tool automatically segments long documents into multiple parts and merges the results.
 
-### Q: 提取的数据准确吗？
+### Q: Is the extracted data accurate?
 
-**A:** AI 提取的准确率取决于文档的清晰度和数据结构。建议：
-1. 对提取结果进行人工验证
-2. 对于重要数据，使用 Mathpix OCR 提高精度
-3. 可以通过调整 prompt 优化提取效果
+**A:** AI extraction accuracy depends on document clarity and data structure. Recommendations:
+1. Manually verify extraction results
+2. Use Mathpix OCR for important data to improve precision
+3. Optimize extraction by adjusting prompts
 
-### Q: 可以提取图片中的图表数据吗？
+### Q: Can I extract chart data from images?
 
-**A:** 可以！Claude Code 支持图片分析功能，可以识别图表并提取数据点。
+**A:** Yes! Claude Code supports image analysis and can recognize charts and extract data points.
 
-### Q: 如何自定义提取字段？
+### Q: How to customize extraction fields?
 
-**A:** 使用 `-p` 参数提供自定义提示，例如：
+**A:** Use the `-p` parameter to provide custom prompts, for example:
 
 ```bash
 python extractor.py paper.pdf \
-  -p "提取表格1中的所有数据，包括样品名称、浓度、吸光度、荧光强度" \
+  -p "Extract all data from Table 1, including sample name, concentration, absorbance, fluorescence intensity" \
   -o results.md
 ```
 
-## 贡献指南
+## Contributing
 
-欢迎贡献代码、报告问题或提出新功能建议！
+Contributions are welcome! Feel free to submit issues, feature requests, or pull requests.
 
-1. Fork 本项目
-2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 开启 Pull Request
+1. Fork this project
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## 引用
+## Citation
 
-如果本项目对你的研究有帮助，请引用：
+If this project helps your research, please cite:
 
 ```bibtex
 @software{sci_data_extractor,
@@ -371,21 +373,25 @@ python extractor.py paper.pdf \
 }
 ```
 
-## 许可证
+## License
 
-本项目采用 **Creative Commons Attribution 4.0 International (CC BY 4.0)** 许可证。
+This project is licensed under the **Creative Commons Attribution 4.0 International (CC BY 4.0)** License.
 
-## 相关资源
+## Related Resources
 
-- [原项目: Automated Enzyme Kinetics Extractor](https://huggingface.co/spaces/jackkuo/Automated-Enzyme-Kinetics-Extractor)
-- [相关论文: Enzyme Co-Scientist](https://www.biorxiv.org/content/10.1101/2025.03.02.153459v1)
-- [Claude Code Skills 文档](https://docs.anthropic.com/en/docs/claude-code/skills)
+- [Original Project: Automated Enzyme Kinetics Extractor](https://huggingface.co/spaces/jackkuo/Automated-Enzyme-Kinetics-Extractor)
+- [Related Paper: Enzyme Co-Scientist](https://www.biorxiv.org/content/10.1101/2025.03.02.153459v1)
+- [Claude Code Skills Documentation](https://docs.anthropic.com/en/docs/claude-code/skills)
 
-## 联系方式
+## Contact
 
 - GitHub: [JackKuo666/sci-data-extractor](https://github.com/JackKuo666/sci-data-extractor)
-- GitHub Issues: [提交问题](https://github.com/JackKuo666/sci-data-extractor/issues)
+- GitHub Issues: [Submit Issues](https://github.com/JackKuo666/sci-data-extractor/issues)
+
+## 中文文档
+
+Chinese documentation is available at [README_ZH.md](README_ZH.md).
 
 ---
 
-**注意**: 本工具仅供学术研究使用，使用提取的数据时请遵守版权法规并引用原始文献。
+**Note**: This tool is for academic research use only. Please comply with copyright regulations and cite original literature when using extracted data.
