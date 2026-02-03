@@ -23,14 +23,14 @@
 ### 方法一：通过 npx 一键安装（推荐）
 
 ```bash
-npx skills add https://github.com/你的用户名/sci-data-extractor.git
+npx skills add https://github.com/JackKuo666/sci-data-extractor.git
 ```
 
 ### 方法二：通过 Git 克隆
 
 ```bash
 # 克隆到 Claude Code 的 skills 目录
-git clone https://github.com/你的用户名/sci-data-extractor.git ~/.claude/skills/sci-data-extractor
+git clone https://github.com/JackKuo666/sci-data-extractor.git ~/.claude/skills/sci-data-extractor
 ```
 
 ### 方法三：手动安装
@@ -365,9 +365,9 @@ python extractor.py paper.pdf \
 ```bibtex
 @software{sci_data_extractor,
   title={Sci-Data-Extractor: AI-Powered Scientific Literature Data Extraction},
-  author={Your Name},
+  author={JackKuo},
   year={2025},
-  url={https://github.com/你的用户名/sci-data-extractor}
+  url={https://github.com/JackKuo666/sci-data-extractor}
 }
 ```
 
@@ -383,8 +383,8 @@ python extractor.py paper.pdf \
 
 ## 联系方式
 
-- GitHub Issues: [提交问题](https://github.com/你的用户名/sci-data-extractor/issues)
-- Email: your.email@example.com
+- GitHub: [JackKuo666/sci-data-extractor](https://github.com/JackKuo666/sci-data-extractor)
+- GitHub Issues: [提交问题](https://github.com/JackKuo666/sci-data-extractor/issues)
 
 ---
 
