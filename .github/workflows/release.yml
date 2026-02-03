@@ -1,0 +1,51 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  create-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Extract version from tag
+      id: version
+      run: echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+    - name: Create Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Sci-Data-Extractor ${{ steps.version.outputs.version }}
+        body: |
+          ## What's New
+
+          See [CHANGELOG.md](CHANGELOG.md) for details.
+
+          ## Installation
+
+          ```bash
+          npx skills add https://github.com/JackKuo666/sci-data-extractor.git
+          ```
+
+          ## Verification
+
+          You can verify the release by checking the git tag:
+          ```bash
+          git clone --branch ${{ steps.version.outputs.version }} https://github.com/JackKuo666/sci-data-extractor.git
+          cd sci-data-extractor
+          git verify-tag ${{ steps.version.outputs.version }}
+          ```
+        draft: false
+        prerelease: false

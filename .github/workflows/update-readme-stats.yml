@@ -1,0 +1,50 @@
+name: Update README Stats
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '**.py'
+  workflow_dispatch:
+
+jobs:
+  update-stats:
+    name: Update repository statistics in README
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Count lines of code
+      id: loc
+      run: |
+        # Count total lines in Python files
+        total_lines=$(find . -name "*.py" -type f -exec cat {} \; | wc -l)
+        echo "total_lines=$total_lines" >> $GITHUB_OUTPUT
+
+        # Count files
+        py_files=$(find . -name "*.py" -type f | wc -l)
+        echo "py_files=$py_files" >> $GITHUB_OUTPUT
+
+    - name: Get latest commit date
+      id: date
+      run: |
+        last_update=$(git log -1 --format=%cd --date=short)
+        echo "date=$last_update" >> $GITHUB_OUTPUT
+
+    - name: Create commit
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        # This is a placeholder - actual stat updates would modify README
+        # Currently this just ensures the workflow works
+        echo "Repository stats: ${{ steps.loc.outputs.total_lines }} lines of code in ${{ steps.loc.outputs.py_files }} Python files"
+        echo "Last updated: ${{ steps.date.outputs.date }}"
