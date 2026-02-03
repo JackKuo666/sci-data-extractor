@@ -26,6 +26,13 @@ except ImportError:
     print("安装命令: pip install openai")
     sys.exit(1)
 
+# 加载 .env 文件
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # 如果没有安装 python-dotenv，跳过加载
+
 
 # ============================================
 # 配置管理
@@ -215,6 +222,12 @@ class DataExtractor:
         temperature = temperature or self.config.default_temperature
 
         try:
+            print(f"API 调用信息:")
+            print(f"  - Model: {model}")
+            print(f"  - Base URL: {self.config.base_url}")
+            print(f"  - Messages: {len(messages)} 条")
+            print(f"  - Temperature: {temperature}")
+
             completion = self.client.chat.completions.create(
                 model=model,
                 messages=messages,
@@ -223,10 +236,22 @@ class DataExtractor:
                 stream=False
             )
 
+            print(f"API 响应: {type(completion)}")
+
+            if completion is None:
+                print("错误: API 返回 None")
+                return None
+
+            if not hasattr(completion, 'choices') or not completion.choices:
+                print(f"错误: API 返回没有 choices 字段. 响应: {completion}")
+                return None
+
             return completion.choices[0].message.content
 
         except Exception as e:
             print(f"错误: LLM API 调用失败: {e}")
+            import traceback
+            traceback.print_exc()
             return None
 
     def extract_data(self, content: str, prompt: str, model: str = None,
