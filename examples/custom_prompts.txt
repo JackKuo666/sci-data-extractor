@@ -1,0 +1,69 @@
+# 自定义提取提示示例
+
+## 示例 1: 提取蛋白质结构数据
+
+请从科学论文中提取所有蛋白质结构数据，包括以下字段：
+- PDB_ID: 蛋白质数据库编号
+- Resolution: 分辨率（Å）
+- R_value: R值
+- R_free: R_free值
+- Method: 结构测定方法（X-ray, NMR, Cryo-EM）
+- Space_group: 空间群
+- Organism: 来源生物
+
+输出为 Markdown 表格格式。
+
+## 示例 2: 提取药物筛选数据
+
+请从文献中提取药物筛选实验数据，包括：
+- Compound_Name: 化合物名称
+- IC50: 半数抑制浓度（数值）
+- Unit_IC50: IC50单位
+- EC50: 半数有效浓度（数值）
+- Unit_EC50: EC50单位
+- Target: 靶点蛋白
+- Cell_Line: 细胞系
+- Selectivity: 选择性指数
+
+输出为 Markdown 表格格式，只保留平均数值，不包含标准差。
+
+## 示例 3: 提取材料性能数据
+
+请提取材料的力学性能数据：
+- Material: 材料名称
+- Tensile_Strength: 拉伸强度（MPa）
+- Yield_Strength: 屈服强度（MPa）
+- Elongation: 断裂伸长率（%）
+- Modulus: 弹性模量（GPa）
+- Density: 密度（g/cm³）
+- Processing_Method: 加工方法
+
+数值和单位分开存储。输出为 Markdown 表格。
+
+## 示例 4: 提取临床试验数据
+
+请提取临床试验的关键数据：
+- Phase: 试验阶段（I/II/III/IV）
+- Sample_Size: 样本量
+- Treatment_Group: 治疗组干预措施
+- Control_Group: 对照组干预措施
+- Primary_Endpoint: 主要终点
+- Response_Rate: 有效率（%）
+- Adverse_Events: 不良事件发生率（%）
+- p_value: 统计显著性
+
+输出为 Markdown 表格格式。
+
+## 示例 5: 提取基因表达数据
+
+请提取基因表达分析数据：
+- Gene: 基因名称
+- Organism: 生物体
+- Tissue: 组织类型
+- Condition: 实验条件
+- Expression_Level: 表达水平
+- Unit: 表达量单位（如 FPKM, TPM, RPKM）
+- Fold_Change: 倍数变化
+- Regulation: 上调/下调/无变化
+
+输出为 Markdown 表格格式。
