@@ -1,0 +1,52 @@
+name: Example Usage
+
+on:
+  workflow_dispatch: # 手动触发
+  # 允许其他仓库调用
+  workflow_call:
+
+jobs:
+  example-extraction:
+    name: Example: Extract Data from PDF
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Test PyMuPDF extraction (no API key needed)
+      run: |
+        # 只测试 PDF 文本提取功能，不调用 LLM
+        python -c "
+import fitz
+doc = fitz.open('examples/sample.pdf')
+print(f'PDF pages: {doc.page_count}')
+text = doc.load_page(0).get_text('text')
+print(f'First page text length: {len(text)} characters')
+print('✓ PDF text extraction works!')
+        "
+
+    - name: Show example usage
+      run: |
+        echo "📚 Example Usage:"
+        echo ""
+        echo "1. Install the skill:"
+        echo "   npx skills add https://github.com/JackKuo666/sci-data-extractor.git"
+        echo ""
+        echo "2. Set up API key:"
+        echo "   export EXTRACTOR_API_KEY='your-api-key'"
+        echo ""
+        echo "3. Run extraction:"
+        echo "   python extractor.py examples/sample.pdf --template enzyme -o output.md"
+        echo ""
+        echo "4. Or use in Claude Code:"
+        echo "   /extract-data 从 sample.pdf 中提取酶动力学数据"
