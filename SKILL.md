@@ -1,6 +1,5 @@
-# Sci-Data-Extractor: 科学文献数据提取技能
-
-> 从科学文献 PDF 中智能提取结构化数据，支持表格、图表和文本中的数据识别
+# name: Sci-Data-Extractor
+# description: 从科学文献 PDF 中智能提取结构化数据的专业工具
 
 ## 技能概述
 
