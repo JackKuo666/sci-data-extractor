@@ -51,8 +51,36 @@ git clone https://github.com/JackKuo666/sci-data-extractor.git ~/.claude/skills/
 
 ### 安装 Python 依赖
 
+**方式一：使用 uv（推荐，最快）**
+
+```bash
+# 安装 uv（如果还没安装）
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# 在项目目录创建虚拟环境并安装依赖
+cd ~/.claude/skills/sci-data-extractor
+uv venv
+source .venv/bin/activate  # Linux/macOS
+# 或 .venv\Scripts\activate  # Windows
+uv pip install -r requirements.txt
+```
+
+**方式二：使用 conda（适合已有 conda 的科研用户）**
+
 ```bash
 cd ~/.claude/skills/sci-data-extractor
+conda create -n sci-data-extractor python=3.11 -y
+conda activate sci-data-extractor
+pip install -r requirements.txt
+```
+
+**方式三：使用 venv（Python 内置，无需额外安装）**
+
+```bash
+cd ~/.claude/skills/sci-data-extractor
+python -m venv .venv
+source .venv/bin/activate  # Linux/macOS
+# 或 .venv\Scripts\activate  # Windows
 pip install -r requirements.txt
 ```
 

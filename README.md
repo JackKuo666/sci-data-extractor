@@ -52,8 +52,36 @@ git clone https://github.com/JackKuo666/sci-data-extractor.git ~/.claude/skills/
 
 ### Install Python Dependencies
 
+**Option 1: Using uv (Recommended - Fastest)**
+
+```bash
+# Install uv (if not already installed)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Create virtual environment and install dependencies in project directory
+cd ~/.claude/skills/sci-data-extractor
+uv venv
+source .venv/bin/activate  # Linux/macOS
+# or .venv\Scripts\activate  # Windows
+uv pip install -r requirements.txt
+```
+
+**Option 2: Using conda (Best for scientific/research users)**
+
 ```bash
 cd ~/.claude/skills/sci-data-extractor
+conda create -n sci-data-extractor python=3.11 -y
+conda activate sci-data-extractor
+pip install -r requirements.txt
+```
+
+**Option 3: Using venv (Built-in, no extra installation)**
+
+```bash
+cd ~/.claude/skills/sci-data-extractor
+python -m venv .venv
+source .venv/bin/activate  # Linux/macOS
+# or .venv\Scripts\activate  # Windows
 pip install -r requirements.txt
 ```
 
